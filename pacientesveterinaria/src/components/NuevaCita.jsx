@@ -1,18 +1,22 @@
 import React, { Component } from 'react'
+// Libreria para generar id's unicos en caso de no tener acceso a una BD's
+import uuid from 'uuid';
+
+const stateInicial = {
+    // Los nombres de los inputs deben ser iguales a los que forman parte del state
+    cita: {
+        mascota: '',
+        propietario: '',
+        fecha: '',
+        hora: '',
+        sintomas: ''
+    },
+    // El valor inicial arranca sin errores
+    error: false
+}
 
 class NuevaCita extends Component {
-    state = {
-        // Los nombres de los inputs deben ser iguales a los que forman parte del state
-        cita: {
-            mascota: '',
-            propietario: '',
-            fecha: '',
-            hora: '',
-            sintomas: ''
-        },
-        // El valor inicial arranca sin errores
-        error: false
-    }
+    state = { ...stateInicial }
 
     // Metodo cuando el usuario escribe en los inputs
     // Para saber en que elemento te encuentras y que estas escribiendo se pasa un parametro y se accede a sus propiedades
@@ -47,16 +51,37 @@ class NuevaCita extends Component {
             return;
         }
 
+        // generar objeto con los datos
+        // Se genera una copia del state
+        const nuevaCita = {...this.state.cita};
+        // Se agrega a la copia un nuevo id 
+        nuevaCita.id = uuid();
+
         // Agregar la cita al state de App
+        // A traves de esta funcion se envian los valores del state al componente padre
+        // this.props.crearNuevaCita(this.state.cita)
+        // Se pasa como referencia la variable que almacena los valores del estado mas el ID
+        this.props.crearNuevaCita(nuevaCita);
+
+        // Colocar en el state el state Inicial
+        this.setState({
+            ...stateInicial
+        })
     }
 
     render() {
+
+        // extraer valor del state
+        const { error } = this.state;
         return (
             <div className='card mt-5 py-5'>
                 <div className='card-body'>
                     <h2 className='card-title text-center mb-5'>
                         Llena el formulario para crear una nueva cita
                     </h2>
+
+                    {/* Si hay un cambio en el state se vuelve a ejecutar el codigo */}
+                    {error ? <div className='alert alert-danger mt-2 mb-5 text-center'>Todos los campos son obligatorios</div> : null}
 
                     {/* Los form en react no tienen action ni method */}
                     <form
