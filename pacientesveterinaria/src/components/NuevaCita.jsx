@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 // Libreria para generar id's unicos en caso de no tener acceso a una BD's
 import uuid from 'uuid';
+import PropTypes from 'prop-types';
+
 
 const stateInicial = {
     // Los nombres de los inputs deben ser iguales a los que forman parte del state
@@ -167,6 +169,10 @@ class NuevaCita extends Component {
             </div>
         )
     }
+}
+
+NuevaCita.propTypes = {
+    crearNuevaCita : PropTypes.func.isRequired
 }
 
 export default NuevaCita
