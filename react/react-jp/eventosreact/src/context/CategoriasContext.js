@@ -13,7 +13,7 @@ export const CategoriasConsumer = CategoriasContext.Consumer;
 
 // 2. Crear Provider
 export class CategoriasProvider extends Component {
-    token = 'BICX7YXKJODJJYN4LTGB';
+    token = 'NNBV2Y7KFTJVQKLBJ3JD';
     
     state = {
         // Lo que se almacene en este state sera el resultado de la consulta
@@ -25,7 +25,7 @@ export class CategoriasProvider extends Component {
     }
 
     obtenerCategorias = async () => {
-        let url = `https://www.eventbriteapi.com/v3/categories/?token=${this.token}&locale=es_ES`;
+        let url = `https://cors-anywhere.herokuapp.com/https://www.eventbriteapi.com/v3/categories/?token=${this.token}&locale=es_ES`;
 
         let categorias = await axios.get(url);
 
@@ -40,13 +40,12 @@ export class CategoriasProvider extends Component {
             // Aqui se define el state inicial y desde aqui salen los datos
             <CategoriasContext.Provider
                 value={{
-                    categorias : this.state.categorias,
+                    categorias : this.state.categorias
                     // En algunos casos es correcto agregar multiples propiedades a un objeto del context.
                     // Sobre todo una funcion porque esta puede cambiar los valores del state.
-                    // El problema llega con los eventos ya que si estos se pasan como parte del provider
-                    // Cuando el usuario haga una busqueda por dichos eventos la lista del valor se recargara
+                    // El problema llega con los eventos ya que si estos se pasan como parte del provider y 
+                    // usuario haga una busqueda por dichos eventos la lista del valor se recargara
                     // Es por eso que conviene mas crear otro context
-                    holaMundo : 'Que pedo'
                 }}
             >
                 {this.props.children}
