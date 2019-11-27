@@ -37,10 +37,7 @@ function ProductoLista(props) {
                     )
                     // Consultar la api nuevamente
                     guardarRecargarProductos(true);
-                }
-
-                
-                history.push('/productos');
+                }                
                } catch (error) {
                 Swal.fire({
                     icon: 'error',
