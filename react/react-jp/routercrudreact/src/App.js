@@ -11,16 +11,23 @@ import AgregarProducto from './components/AgregarProducto';
 function App() {
 
   const [ productos, guardarProductos ] = useState([]);
+  const [ recargarProductos, guardarRecargarProductos ] = useState(true);
 
   useEffect(() => {
-    const consultarApi = async () => {
-      // Consultar api de json-server
-      const resultado = await axios.get('http://localhost:4000/restaurant');
-      
-      guardarProductos(resultado.data);
+    
+    if(recargarProductos) {
+      const consultarApi = async () => {
+        // Consultar api de json-server
+        const resultado = await axios.get('http://localhost:4000/restaurant');
+        
+        guardarProductos(resultado.data);
+      }
+      consultarApi();
+
+      // Cambiar a false la recarga de los productos
+      guardarRecargarProductos(false);
     }
-    consultarApi();
-  }, [])
+  }, [recargarProductos])
 
   return (
     <Router>
@@ -42,9 +49,31 @@ function App() {
             ) } 
           />
           {/* Cuando no se pasan props se utiliza component */}
-          <Route exact path='/nuevo-producto' component={AgregarProducto} />
+          <Route 
+            exact path='/nuevo-producto' 
+            render={ () => (
+              <AgregarProducto
+                guardarRecargarProductos={guardarRecargarProductos}
+              />
+            ) } />
+
           <Route exact path='/productos/:id' component={Producto} />
-          <Route exact path='/productos/editar/:id' component={EditarProducto} />
+
+          <Route 
+            exact path='/productos/editar/:id' 
+            render={ props => {
+              // Tomar el ID del producto
+              const idProducto = parseInt(props.match.params.id);
+              
+              // El producto que se pasa al State
+              const producto = productos.filter(producto => producto.id === idProducto);
+
+              return (
+                <EditarProducto 
+                  producto={producto[0]}
+                />
+              )              
+            } } />
         </Switch>
       </main>
       <p className="mt-4 p2 text-center">Todos los derechos Reservados</p>
