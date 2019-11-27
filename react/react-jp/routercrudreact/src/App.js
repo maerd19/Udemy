@@ -45,6 +45,7 @@ function App() {
             render={ () => (
               <Productos
                 productos={productos}
+                guardarRecargarProductos={guardarRecargarProductos}
               />
             ) } 
           />
@@ -71,6 +72,7 @@ function App() {
               return (
                 <EditarProducto 
                   producto={producto[0]}
+                  guardarRecargarProductos={guardarRecargarProductos}
                 />
               )              
             } } />

@@ -1,7 +1,14 @@
 import React, { useState, useRef } from 'react';
 import Error from './Error';
 
-function EditarProducto({producto}) {
+import axios from 'axios';
+import Swal from 'sweetalert2';
+import { withRouter } from 'react-router-dom';
+
+function EditarProducto(props) {
+
+    // destructuring de props
+    const {history, producto, guardarRecargarProductos} = props;
 
     // Generar los refs
     const precioPlatilloRef = useRef('');
@@ -11,24 +18,55 @@ function EditarProducto({producto}) {
     const [ categoria, guardarCategoria ] = useState('');
     const [ error, guardarError ] = useState(false);
 
-    const editarProducto = e => {
+    const editarProducto = async e => {
         e.preventDefault();
 
+        // validacion
+        const nuevoNombrePlatillo = nombrePlatilloRef.current.value,
+              nuevoPrecioPlatillo = precioPlatilloRef.current.value;        
+
+        if(nuevoNombrePlatillo === '' || nuevoPrecioPlatillo === '') {
+            guardarError(true);
+            return;
+        }
+
+        guardarError(false);
         // Revisar si cambio la categoria. De lo contrario asignar el mismo valor
         let categoriaPlatillo = (categoria === '') ? producto.categoria : categoria;
         console.log(categoriaPlatillo);
         
 
-        // Obtener los valores del formulario
-        console.log(precioPlatilloRef);        
-        
+        // Obtener los valores del formulario              
         const editarPlatillo = {
-            precioPlatillo : precioPlatilloRef.current.value,
-            nombrePlatillo : nombrePlatilloRef.current.value,
+            precioPlatillo : nuevoPrecioPlatillo,
+            nombrePlatillo : nuevoNombrePlatillo, 
             categoria : categoriaPlatillo
         }
         
         // Enviar el request
+        const url = `http://localhost:4000/restaurant/${producto.id}`;
+
+        try {
+            const resultado = await axios.put(url, editarPlatillo);
+
+            if(resultado.status === 200 ) {
+                Swal.fire(
+                    'Producto editado',
+                    'El producto se edito correctamente',
+                    'success'
+                  )
+            }            
+        } catch (error) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Hubo un error, vuelve a intentarlo'
+              }) 
+        }
+
+        // Redirigir al usuario, consultar api
+        guardarRecargarProductos(true);
+        history.push('/productos');
     }
 
     // Funcion para cambiar el valor del radio button
@@ -134,4 +172,4 @@ function EditarProducto({producto}) {
     )
 }
 
-export default EditarProducto;
+export default withRouter(EditarProducto);

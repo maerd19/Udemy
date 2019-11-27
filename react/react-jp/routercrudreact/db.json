@@ -1,20 +1,8 @@
 {
   "restaurant": [
     {
-      "precioPlatillo": "200",
-      "nombrePlatillo": "Cheesecake",
-      "categoria": "postre",
-      "id": 1
-    },
-    {
-      "precioPlatillo": "300",
-      "nombrePlatillo": "Rib Eye 400g",
-      "categoria": "cortes",
-      "id": 2
-    },
-    {
-      "nombrePlatillo": "ensalada rusa",
-      "precioPlatillo": "100",
+      "precioPlatillo": "105",
+      "nombrePlatillo": "ensalada de pollo y verduras",
       "categoria": "ensalada",
       "id": 3
     },
@@ -31,12 +19,6 @@
       "id": 5
     },
     {
-      "nombrePlatillo": "Ensalada de Pollo",
-      "precioPlatillo": "100",
-      "categoria": "ensalada",
-      "id": 6
-    },
-    {
       "nombrePlatillo": "refresco de cola",
       "precioPlatillo": "30",
       "categoria": "bebida",
@@ -47,18 +29,6 @@
       "precioPlatillo": "66",
       "categoria": "cortes",
       "id": 8
-    },
-    {
-      "nombrePlatillo": "COmida sana",
-      "precioPlatillo": "150",
-      "categoria": "cortes",
-      "id": 9
-    },
-    {
-      "nombrePlatillo": "led zeppelin",
-      "precioPlatillo": "60",
-      "categoria": "cortes",
-      "id": 10
     }
   ]
 }
