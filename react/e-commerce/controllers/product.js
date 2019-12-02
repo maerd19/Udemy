@@ -174,7 +174,6 @@ exports.list = (req, res) => {
         });
 };
 
-// Search for related products
 /**
  * it will find the products based on the req product category
  * other products that has the same category, will be returned
@@ -220,12 +219,13 @@ exports.listCategories = (req, res) => {
  * as the user clicks on those checkbox and radio buttons
  * we will make api request and show the products to users based on what he wants
  */
-
 exports.listBySearch = (req, res) => {
     let order = req.body.order ? req.body.order : "desc";
     let sortBy = req.body.sortBy ? req.body.sortBy : "_id";
     let limit = req.body.limit ? parseInt(req.body.limit) : 100;
     let skip = parseInt(req.body.skip);
+    // findArgs will contain the category id's & the price range
+    // The object will populate based on what we ge in the request body
     let findArgs = {};
 
     // console.log(order, sortBy, limit, skip, req.body.filters);
@@ -247,6 +247,7 @@ exports.listBySearch = (req, res) => {
     }
 
     Product.find(findArgs)
+        // select all but the photo
         .select("-photo")
         .populate("category")
         .sort([[sortBy, order]])
@@ -258,14 +259,16 @@ exports.listBySearch = (req, res) => {
                     error: "Products not found"
                 });
             }
-            res.json({
+            res.status(200).json({
                 size: data.length,
                 data
             });
         });
 };
 
+// With this we can view any product photo
 exports.photo = (req, res, next) => {
+    // IF we have the product in the request then we can send it
     if (req.product.photo.data) {
         res.set("Content-Type", req.product.photo.contentType);
         return res.send(req.product.photo.data);

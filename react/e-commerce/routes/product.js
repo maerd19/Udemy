@@ -29,11 +29,12 @@ router.get("/products/related/:productId", listRelated);
 router.get("/products/categories", listCategories);
 // list products by search
 router.post("/products/by/search", listBySearch);
+// Send photo to frontend
 router.get("/product/photo/:productId", photo);
 
 // anytime we find a parameter called userId in the route userById will run and make the user info available in the request object
 router.param("userId", userById);
-// anytime we find a parameter called productId in the route productById will run
+// anytime we find a parameter called productId in the route productById will run and make the product info available in the request object
 router.param("productId", productById);
 
 module.exports = router;
