@@ -11,6 +11,7 @@ router.get('/secret/:userId', requireSignin, isAuth, isAdmin, (req, res) => {
     })
 })
 
+// anytime we find a parameter called userId in the route userById will run and make the user info available in the request object
 router.param('userId', userById)
 
 module.exports = router;

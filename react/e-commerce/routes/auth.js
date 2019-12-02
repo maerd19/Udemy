@@ -5,6 +5,7 @@ const {
     signup, 
     signin, 
     signout, 
+    // anytime we want to restrict any routes requireSignin can be used
     requireSignin 
 } = require ('../controllers/auth');
 const { userSignupValidator } = require('../validator/')
