@@ -43,17 +43,24 @@ export const signin = user => {
         });
 };
 
+// Store data in localStorage
 export const authenticate = (data, next) => {
+    // if we have access to the windows object
     if (typeof window !== "undefined") {
+        // name of field, value of field
         localStorage.setItem("jwt", JSON.stringify(data));
+        // This will be a callback function
         next();
     }
 };
 
+// This function will take a callback that will be used to update the state and redirect the user
 export const signout = next => {
     if (typeof window !== "undefined") {
+        // remove jwt from localStorage 
         localStorage.removeItem("jwt");
         next();
+        // request to back end to log out the user
         return fetch(`${API}/signout`, {
             method: "GET"
         })
@@ -64,6 +71,7 @@ export const signout = next => {
     }
 };
 
+// Validate if user is authenticated
 export const isAuthenticated = () => {
     if (typeof window == "undefined") {
         return false;

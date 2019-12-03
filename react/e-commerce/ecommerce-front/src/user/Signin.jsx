@@ -5,8 +5,8 @@ import { signin, authenticate } from "../auth";
 
 const Signin = () => {
     const [values, setValues] = useState({
-        email: "ryan@gmail.com",
-        password: "rrrrrr9",
+        email: "correo@correo.com",
+        password: "123456",
         error: "",
         // loading will be used to show something to the user while logging in
         loading: false,
@@ -30,7 +30,8 @@ const Signin = () => {
                 // if log in fails loading goes back to false
                 setValues({ ...values, error: data.error, loading: false });
             } else {
-                // if login was correct we will be redirected to home
+                // authenticate is a middleware that will store the jwt in localStorage
+                // a callback fn() will be executed after storing values in localStorage
                 authenticate(data, () => {
                     setValues({
                         ...values,
