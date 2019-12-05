@@ -1,6 +1,7 @@
 // The layout will be used for the entire application
 import React from "react";
 import Menu from "./Menu";
+import '../styles.css';
 
 // Default values for props that are not sent
 const Layout = ({
